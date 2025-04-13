@@ -19,20 +19,18 @@ interface RetryOptions {
   statusCodes: number[];
 }
 
-// 공통 옵션 설정
+
 const commonOptions: ApiOptions = {
   timeout: 30000, // 30초 타임아웃
   retry: {
-    limit: 2, // 최대 2번 재시도
-    methods: ['get'], // GET 요청만 재시도
+    limit: 2,
+    methods: ['get'],
     statusCodes: [408, 413, 429, 500, 502, 503, 504], // 재시도할 상태 코드
   } as RetryOptions,
   hooks: {
     beforeRequest: [
       (request: Request) => {
-        // 요청 전 훅 (인증 토큰 추가 등)
         request.headers.set('Accept', 'application/json');
-        // 여기에 필요한 인증 헤더 추가 가능
       }
     ],
     afterResponse: [
